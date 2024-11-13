@@ -15,6 +15,7 @@ class NetworkUtils: NetworkUtilsProtocol {
     private init() {
         let configuration = URLSessionConfiguration.default
         configuration.timeoutIntervalForRequest = Constants.apiTimeoutInterval
+        configuration.timeoutIntervalForResource = Constants.apiTimeoutInterval
         self.session = Session(configuration: configuration, interceptor: NetworkInterceptor())
     }
     

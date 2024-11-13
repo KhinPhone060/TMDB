@@ -21,26 +21,42 @@ struct MovieDetailScreenView: View {
     }
     
     var body: some View {
-        ScrollView(showsIndicators: false) {
-            VStack {
-                TopBar()
-                
-                ZStack(alignment: .bottom) {
+        ZStack {
+            switch movieDetailVm.state {
+            case .loading:
+                ProgressView()
+                    .tint(.white)
+            case .success:
+                ScrollView(showsIndicators: false) {
                     VStack {
-                        BackDropPosterView()
-                        Spacer().frame(height: 70)
-                    }
+                        TopBar()
                         
-                    MoviePosterAndTitle()
+                        ZStack(alignment: .bottom) {
+                            VStack {
+                                BackDropPosterView()
+                                Spacer().frame(height: 70)
+                            }
+                                
+                            MoviePosterAndTitle()
+                        }
+                        
+                        MovieInfoSection()
+                        
+                        AboutMovieSection()
+                        
+                        Spacer()
+                    }
                 }
-                
-                MovieInfoSection()
-                
-                AboutMovieSection()
-                
-                Spacer()
+            case .error(let error):
+                VStack {
+                    Text("Error: \(error.localizedDescription)")
+                    Button("Retry") {
+                        movieDetailVm.retry()
+                    }
+                }
             }
         }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(.theme)
     }
     

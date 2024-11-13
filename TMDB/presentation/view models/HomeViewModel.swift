@@ -12,6 +12,8 @@ class HomeViewModel: ObservableObject {
     @Published var upcomingMovies: [MovieEntity] = []
     @Published var popularMovies: [MovieEntity] = []
     
+    @Published var state: NetworkState = .loading
+    
     private var cancellables = Set<AnyCancellable>()
     
     private let getMovieListUsecase: GetMovieListUsecase
@@ -23,17 +25,20 @@ class HomeViewModel: ObservableObject {
     }
     
     func fetchUpcomingMovieList() {
+        state = .loading
         getMovieListUsecase.execute(category: .upcoming)
             .receive(on: DispatchQueue.main)
-            .sink(receiveCompletion: { completion in
+            .sink(receiveCompletion: { [weak self] completion in
                 switch completion {
                 case .failure(let error):
+                    self?.state = .error(error)
                     print(error.localizedDescription)
                 case .finished:
                     break
                 }
             }, receiveValue: { [weak self] response in
                 self?.upcomingMovies = response
+                self?.state = .success
             })
             .store(in: &cancellables)
     }
@@ -52,5 +57,10 @@ class HomeViewModel: ObservableObject {
                 self?.popularMovies = response
             })
             .store(in: &cancellables)
+    }
+    
+    func retry() {
+        fetchUpcomingMovieList()
+        fetchPopularMovieList()
     }
 }

@@ -10,6 +10,7 @@ import Combine
 
 class MovieDetailViewModel: ObservableObject {
     @Published var movieDetail = MovieDetailEntity(model: MovieDetailModel(title: "", backdrop_path: "", poster_path: "", release_date: "", runtime: 0, genres: [], overview: ""))
+    @Published var state: NetworkState = .loading
     
     private var cancellables = Set<AnyCancellable>()
     
@@ -23,18 +24,24 @@ class MovieDetailViewModel: ObservableObject {
     }
     
     func getMovieDetail(movieId: Int) {
+        state = .loading
         getMovieDetailUsecase.execute(movieId: movieId)
             .receive(on: DispatchQueue.main)
-            .sink(receiveCompletion: { completion in
+            .sink(receiveCompletion: { [weak self] completion in
                 switch completion {
                 case .finished:
                     break
                 case .failure(let error):
-                    print("Error occurred: \(error)")
+                    self?.state = .error(error)
                 }
             }, receiveValue: { [weak self] movieDetail in
                 self?.movieDetail = movieDetail
+                self?.state = .success
             })
             .store(in: &cancellables)
+    }
+    
+    func retry() {
+        getMovieDetail(movieId: movieId)
     }
 }

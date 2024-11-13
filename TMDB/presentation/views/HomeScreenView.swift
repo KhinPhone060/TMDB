@@ -13,13 +13,28 @@ struct HomeScreenView: View {
     
     var body: some View {
         NavigationView {
-            ScrollView(showsIndicators: false) {
-                VStack(spacing: 40) {
-                    MoviesList(title: "Upcoming Movies", movies: homeVm.upcomingMovies)
-                    MoviesList(title: "Popular Movies", movies: homeVm.popularMovies)
+            ZStack {
+                switch homeVm.state {
+                case .loading:
+                    ProgressView()
+                        .tint(.white)
+                case .success:
+                    ScrollView(showsIndicators: false) {
+                        VStack(spacing: 40) {
+                            MoviesList(title: "Upcoming Movies", movies: homeVm.upcomingMovies)
+                            MoviesList(title: "Popular Movies", movies: homeVm.popularMovies)
+                        }
+                    }
+                    .padding(.vertical)
+                case .error(let error):
+                    VStack {
+                        Text("Error: \(error.localizedDescription)")
+                        Button("Retry") {
+                            homeVm.retry()
+                        }
+                    }
                 }
             }
-            .padding(.vertical)
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             .background(.theme)
         }
