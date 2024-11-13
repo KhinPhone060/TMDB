@@ -12,15 +12,17 @@ struct HomeScreenView: View {
     @StateObject var homeVm = HomeViewModel()
     
     var body: some View {
-        ScrollView(showsIndicators: false) {
-            VStack(spacing: 40) {
-                MoviesList(title: "Upcoming Movies", movies: homeVm.upcomingMovies)
-                MoviesList(title: "Popular Movies", movies: homeVm.popularMovies)
+        NavigationView {
+            ScrollView(showsIndicators: false) {
+                VStack(spacing: 40) {
+                    MoviesList(title: "Upcoming Movies", movies: homeVm.upcomingMovies)
+                    MoviesList(title: "Popular Movies", movies: homeVm.popularMovies)
+                }
             }
+            .padding(.vertical)
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+            .background(.theme)
         }
-        .padding(.vertical)
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .background(.theme)
     }
     
     func MoviesList(title: String, movies: [MovieEntity]) -> some View {
@@ -32,7 +34,12 @@ struct HomeScreenView: View {
             ScrollView(.horizontal, showsIndicators: false) {
                 LazyHStack(spacing: 16) {
                     ForEach(movies, id: \.uuid) { movie in
-                        MoviePosterImageView(poster: movie.posterPathUrl)
+                        NavigationLink {
+                            MovieDetailScreenView(id: movie.id)
+                                .navigationBarHidden(true)
+                        } label: {
+                            MoviePosterImageView(poster: movie.posterPathUrl)
+                        }
                     }
                 }
             }

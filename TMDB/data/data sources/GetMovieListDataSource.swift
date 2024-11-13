@@ -22,7 +22,6 @@ class GetMovieListDataSource: GetMovieListDataSourceProtocol {
         guard let url: URL = Constants.APIEndPoint.getMovieList(category: category, page: page).url else {
             throw URLError(.badURL)
         }
-        print(url)
         return try await networkUtils.fetch(from: url)
     }
 }
