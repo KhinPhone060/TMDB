@@ -6,13 +6,16 @@
 //
 
 import SwiftUI
+import Kingfisher
 
 struct HomeScreenView: View {
+    @StateObject var homeVm = HomeViewModel()
+    
     var body: some View {
         ScrollView(showsIndicators: false) {
             VStack(spacing: 40) {
-                UpcomingMoviesList()
-                UpcomingMoviesList()
+                MoviesList(title: "Upcoming Movies", movies: homeVm.upcomingMovies)
+                MoviesList(title: "Popular Movies", movies: homeVm.popularMovies)
             }
         }
         .padding(.vertical)
@@ -20,17 +23,16 @@ struct HomeScreenView: View {
         .background(.theme)
     }
     
-    @ViewBuilder
-    func UpcomingMoviesList() -> some View {
+    func MoviesList(title: String, movies: [MovieEntity]) -> some View {
         VStack(alignment: .leading, spacing: 16) {
-            Text("Upcoming Movies")
+            Text(title)
                 .font(.title)
                 .fontWeight(.bold)
                 .foregroundColor(.white)
             ScrollView(.horizontal, showsIndicators: false) {
-                HStack(spacing: 16) {
-                    ForEach(0..<8) { i in
-                        MoviePosterImageView()
+                LazyHStack(spacing: 16) {
+                    ForEach(movies, id: \.uuid) { movie in
+                        MoviePosterImageView(poster: movie.posterPathUrl)
                     }
                 }
             }
@@ -38,9 +40,9 @@ struct HomeScreenView: View {
         .padding(.horizontal)
     }
     
-    func MoviePosterImageView() -> some View {
+    func MoviePosterImageView(poster: String) -> some View {
         ZStack(alignment: .topTrailing) {
-            Image(.demo)
+            KFImage(URL(string: poster))
                 .resizable()
                 .frame(width: 160, height: 240)
                 .aspectRatio(contentMode: .fill)

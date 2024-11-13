@@ -8,7 +8,7 @@
 import Foundation
 import Alamofire
 
-class NetworkUtils {
+class NetworkUtils: NetworkUtilsProtocol {
     static let shared = NetworkUtils()
     private let session: Session
     

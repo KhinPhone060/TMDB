@@ -9,7 +9,7 @@ import Foundation
 
 struct Constants {
     static let apiUrl: String = "https://api.themoviedb.org/3/"
-    static let posterUrl: String = "https://image.tmdb.org/t/p/original"
+    static let posterUrl: String = "https://image.tmdb.org/t/p/w500"
     static let apiTimeoutInterval: Double = 15.0
     static let placeholderImage: String = "https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/No-Image-Placeholder.svg/1665px-No-Image-Placeholder.svg.png"
     
