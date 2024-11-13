@@ -10,6 +10,7 @@ import SwiftUI
 @main
 struct TMDBApp: App {
     let persistenceController = PersistenceController.shared
+    @UIApplicationDelegateAdaptor (AppDelegate.self) private var appDelegate
 
     var body: some Scene {
         WindowGroup {
