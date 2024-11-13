@@ -6,7 +6,14 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		5F49D34D8808130FAEB1D84D /* Pods_TMDB.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2EE5AA64B6BF56ADEEA627D0 /* Pods_TMDB.framework */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXFileReference section */
+		2EE5AA64B6BF56ADEEA627D0 /* Pods_TMDB.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TMDB.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		7689E6B35CA9D9ECEA644E2E /* Pods-TMDB.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TMDB.debug.xcconfig"; path = "Target Support Files/Pods-TMDB/Pods-TMDB.debug.xcconfig"; sourceTree = "<group>"; };
+		CEE3F8C8B66BDD7CC564D8E0 /* Pods-TMDB.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TMDB.release.xcconfig"; path = "Target Support Files/Pods-TMDB/Pods-TMDB.release.xcconfig"; sourceTree = "<group>"; };
 		F7A9A2882CE4BF5A00ECCDCA /* TMDB.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TMDB.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -36,17 +43,37 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5F49D34D8808130FAEB1D84D /* Pods_TMDB.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		4201ECEBBF4E960663028A95 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				2EE5AA64B6BF56ADEEA627D0 /* Pods_TMDB.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		E58D88C366694FE3A013BBB1 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				7689E6B35CA9D9ECEA644E2E /* Pods-TMDB.debug.xcconfig */,
+				CEE3F8C8B66BDD7CC564D8E0 /* Pods-TMDB.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
 		F7A9A27F2CE4BF5A00ECCDCA = {
 			isa = PBXGroup;
 			children = (
 				F7A9A28A2CE4BF5A00ECCDCA /* TMDB */,
 				F7A9A2892CE4BF5A00ECCDCA /* Products */,
+				E58D88C366694FE3A013BBB1 /* Pods */,
+				4201ECEBBF4E960663028A95 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -65,9 +92,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = F7A9A29B2CE4BF5D00ECCDCA /* Build configuration list for PBXNativeTarget "TMDB" */;
 			buildPhases = (
+				CBF41971EBA63D96E349C25A /* [CP] Check Pods Manifest.lock */,
 				F7A9A2842CE4BF5A00ECCDCA /* Sources */,
 				F7A9A2852CE4BF5A00ECCDCA /* Frameworks */,
 				F7A9A2862CE4BF5A00ECCDCA /* Resources */,
+				7A217F22E0780E5FB28E5077 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -77,8 +106,6 @@
 				F7A9A28A2CE4BF5A00ECCDCA /* TMDB */,
 			);
 			name = TMDB;
-			packageProductDependencies = (
-			);
 			productName = TMDB;
 			productReference = F7A9A2882CE4BF5A00ECCDCA /* TMDB.app */;
 			productType = "com.apple.product-type.application";
@@ -126,6 +153,48 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		7A217F22E0780E5FB28E5077 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-TMDB/Pods-TMDB-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-TMDB/Pods-TMDB-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-TMDB/Pods-TMDB-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		CBF41971EBA63D96E349C25A /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-TMDB-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		F7A9A2842CE4BF5A00ECCDCA /* Sources */ = {
@@ -259,6 +328,7 @@
 		};
 		F7A9A29C2CE4BF5D00ECCDCA /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 7689E6B35CA9D9ECEA644E2E /* Pods-TMDB.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -294,6 +364,7 @@
 		};
 		F7A9A29D2CE4BF5D00ECCDCA /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = CEE3F8C8B66BDD7CC564D8E0 /* Pods-TMDB.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
