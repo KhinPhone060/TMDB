@@ -80,15 +80,6 @@ class HomeViewModel: ObservableObject {
             .store(in: &cancellables)
     }
     
-    func toggleFavorite(id: Int, isFavorite: Bool) {
-        let newFavoriteStatus = !isFavorite
-        getLocalMovieUsecase.toggleFavorite(for: id, isFavorite: newFavoriteStatus)
-        
-        if let index = upcomingMovies.firstIndex(where: { $0.id == id }) {
-            upcomingMovies[index].isFavorite = newFavoriteStatus
-        }
-    }
-    
     func retry() {
         fetchUpcomingMovieList()
         fetchPopularMovieList()

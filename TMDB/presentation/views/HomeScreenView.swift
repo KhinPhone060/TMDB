@@ -53,7 +53,7 @@ struct HomeScreenView: View {
                             MovieDetailScreenView(id: movie.id)
                                 .navigationBarHidden(true)
                         } label: {
-                            MoviePosterImageView(id: movie.id, poster: movie.posterPathUrl, isFavorite: movie.isFavorite)
+                            MoviePosterImageView(id: movie.id, poster: movie.posterPathUrl)
                         }
                     }
                 }
@@ -62,7 +62,7 @@ struct HomeScreenView: View {
         .padding(.horizontal)
     }
     
-    func MoviePosterImageView(id: Int, poster: String, isFavorite: Bool) -> some View {
+    func MoviePosterImageView(id: Int, poster: String) -> some View {
         ZStack(alignment: .topTrailing) {
             KFImage(URL(string: poster))
                 .resizable()
@@ -75,9 +75,9 @@ struct HomeScreenView: View {
                 .aspectRatio(contentMode: .fill)
                 .cornerRadius(16)
             Button {
-                homeVm.toggleFavorite(id: id, isFavorite: isFavorite)
+                
             } label: {
-                Image(systemName: isFavorite ? "heart.circle" : "heart.circle.fill")
+                Image(systemName: "heart.circle.fill")
                     .resizable()
                     .frame(width: 35, height: 35)
                     .foregroundColor(.white)
