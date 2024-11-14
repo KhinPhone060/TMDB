@@ -80,7 +80,8 @@ struct MovieDetailScreenView: View {
     func BackDropPosterView() -> some View {
         KFImage(URL(string: movieDetailVm.movieDetail.backdropPath))
             .resizable()
-            .scaledToFit()
+            .scaledToFill()
+            .frame(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.width / 1.848)
     }
     
     func MoviePosterAndTitle() -> some View {

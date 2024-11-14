@@ -10,13 +10,17 @@ import SwiftUI
 @main
 struct TMDBApp: App {
     let persistenceController = PersistenceController.shared
-    @UIApplicationDelegateAdaptor (AppDelegate.self) private var appDelegate
+    @UIApplicationDelegateAdaptor(AppDelegate.self) private var appDelegate
 
     var body: some Scene {
         WindowGroup {
-//            ContentView()
-//                .environment(\.managedObjectContext, persistenceController.container.viewContext)
             HomeScreenView()
+                .environment(\.managedObjectContext, persistenceController.container.viewContext)
+                .onAppear {
+                    if let directoryLocation = FileManager.default.urls(for: .libraryDirectory, in: .userDomainMask).last {
+                        print("Documents Directory: \(directoryLocation)Application Support")
+                    }
+                }
         }
     }
 }

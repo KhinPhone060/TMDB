@@ -66,6 +66,11 @@ struct HomeScreenView: View {
         ZStack(alignment: .topTrailing) {
             KFImage(URL(string: poster))
                 .resizable()
+                .placeholder({ _ in
+                    Image(.posterPlaceholder)
+                        .resizable()
+                        .scaledToFill()
+                })
                 .frame(width: 160, height: 240)
                 .aspectRatio(contentMode: .fill)
                 .cornerRadius(16)
