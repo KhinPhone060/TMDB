@@ -56,4 +56,8 @@ class LocalMovieRepository: LocalMovieRepositoryProtocol {
     func savePopularMovies(_ movies: [MovieEntity]) {
         localDataSource.savePopularMovies(movies)
     }
+    
+    func updateFavoriteStatus(for movieId: Int, isFavorite: Bool) {
+        localDataSource.updateFavoriteStatus(for: movieId, isFavorite: isFavorite)
+    }
 }

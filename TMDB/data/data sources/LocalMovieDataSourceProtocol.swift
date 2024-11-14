@@ -13,6 +13,7 @@ protocol LocalMovieDataSourceProtocol {
     func saveUpcomingMovies(_ movies: [MovieEntity])
     func fetchPopularMovies() -> [PopularMovie]
     func savePopularMovies(_ movies: [MovieEntity])
+    func updateFavoriteStatus(for movieId: Int, isFavorite: Bool)
 }
 
 class LocalMovieDataSource: LocalMovieDataSourceProtocol {
@@ -67,6 +68,20 @@ class LocalMovieDataSource: LocalMovieDataSourceProtocol {
             try context.save()
         } catch {
             print("Error saving movies: \(error)")
+        }
+    }
+    
+    func updateFavoriteStatus(for movieId: Int, isFavorite: Bool) {
+        let request: NSFetchRequest<UpcomingMovie> = UpcomingMovie.fetchRequest()
+        request.predicate = NSPredicate(format: "id == %@", String(movieId))
+        
+        do {
+            if let movieEntity = try context.fetch(request).first {
+                movieEntity.isFavourite = isFavorite
+                try context.save()
+            }
+        } catch {
+            print("Error updating favorite status: \(error)")
         }
     }
 }

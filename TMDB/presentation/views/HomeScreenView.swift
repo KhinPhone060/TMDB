@@ -53,7 +53,7 @@ struct HomeScreenView: View {
                             MovieDetailScreenView(id: movie.id)
                                 .navigationBarHidden(true)
                         } label: {
-                            MoviePosterImageView(poster: movie.posterPathUrl)
+                            MoviePosterImageView(id: movie.id, poster: movie.posterPathUrl, isFavorite: movie.isFavorite)
                         }
                     }
                 }
@@ -62,7 +62,7 @@ struct HomeScreenView: View {
         .padding(.horizontal)
     }
     
-    func MoviePosterImageView(poster: String) -> some View {
+    func MoviePosterImageView(id: Int, poster: String, isFavorite: Bool) -> some View {
         ZStack(alignment: .topTrailing) {
             KFImage(URL(string: poster))
                 .resizable()
@@ -74,14 +74,18 @@ struct HomeScreenView: View {
                 .frame(width: 160, height: 240)
                 .aspectRatio(contentMode: .fill)
                 .cornerRadius(16)
-            Image(systemName: "heart.circle.fill")
-                .resizable()
-                .frame(width: 35, height: 35)
-                .foregroundColor(.white)
-                .background(.gray)
-                .clipShape(Circle())
-                .padding(10)
-                .shadow(color: .blue.opacity(0.3), radius: 8, x: 0, y: 0)
+            Button {
+                homeVm.toggleFavorite(id: id, isFavorite: isFavorite)
+            } label: {
+                Image(systemName: isFavorite ? "heart.circle" : "heart.circle.fill")
+                    .resizable()
+                    .frame(width: 35, height: 35)
+                    .foregroundColor(.white)
+                    .background(.gray)
+                    .clipShape(Circle())
+                    .padding(10)
+                    .shadow(color: .blue.opacity(0.3), radius: 8, x: 0, y: 0)
+            }
         }
     }
 }

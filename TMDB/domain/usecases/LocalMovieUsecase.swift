@@ -21,4 +21,8 @@ class LocalMovieUsecase {
     func getPopularMovie() async -> [MovieEntity] {
         return await repository.getPopularMovies()
     }
+    
+    func toggleFavorite(for movieId: Int, isFavorite: Bool) {
+        repository.updateFavoriteStatus(for: movieId, isFavorite: isFavorite)
+    }
 }

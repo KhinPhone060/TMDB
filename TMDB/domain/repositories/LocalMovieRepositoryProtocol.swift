@@ -13,5 +13,7 @@ protocol LocalMovieRepositoryProtocol {
     
     func getPopularMovies() async -> [MovieEntity]
     func savePopularMovies(_ movies: [MovieEntity])
+    
+    func updateFavoriteStatus(for movieId: Int, isFavorite: Bool)
 }
 

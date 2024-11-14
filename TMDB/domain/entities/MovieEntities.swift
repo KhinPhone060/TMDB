@@ -11,10 +11,12 @@ struct MovieEntity: Hashable {
     let uuid = UUID()
     let id: Int
     var posterPathUrl: String
+    var isFavorite: Bool
     
     init(movieResponse: MovieModel) {
         self.id = movieResponse.id
         self.posterPathUrl = movieResponse.poster_path != nil ?
         Constants.APIEndPoint.getMovieImage(posterPath: movieResponse.poster_path ?? "").url?.absoluteString ?? "" : Constants.placeholderImage
+        self.isFavorite = false
     }
 }
