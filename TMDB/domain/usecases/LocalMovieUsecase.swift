@@ -21,4 +21,16 @@ class LocalMovieUsecase {
     func getPopularMovie() async -> [MovieEntity] {
         return await repository.getPopularMovies()
     }
+    
+    func fetchFavoriteMovieIds() -> [Int] {
+        return repository.getFavoriteMovieIds()
+    }
+    
+    func addFavoriteMovie(_ movieId: Int) {
+        repository.saveFavoriteMovie(movieId)
+    }
+    
+    func removeFavoriteMovie(_ movieId: Int) {
+        repository.removeFavoriteMovie(movieId)
+    }
 }

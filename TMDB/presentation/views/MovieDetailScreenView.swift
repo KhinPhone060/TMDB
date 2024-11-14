@@ -58,6 +58,9 @@ struct MovieDetailScreenView: View {
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(.theme)
+        .task {
+            movieDetailVm.loadFavoriteMovies()
+        }
     }
     
     func TopBar() -> some View {
@@ -71,7 +74,17 @@ struct MovieDetailScreenView: View {
                 .font(.callout)
                 .fontWeight(.semibold)
             Spacer()
-            Image(.bookmarkIc)
+            
+            Button {
+                movieDetailVm.toggleFavoriteStatus(for: id)
+            } label: {
+                Image(systemName:  "heart.circle.fill")
+                    .resizable()
+                    .frame(width: 35, height: 35)
+                    .foregroundColor(.white)
+                    .background(movieDetailVm.favoriteMovieIds.contains(id) ? .red : .gray)
+                    .clipShape(Circle())
+            }
         }
         .padding()
         .foregroundColor(.white)

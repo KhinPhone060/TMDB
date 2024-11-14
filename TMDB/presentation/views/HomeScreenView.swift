@@ -37,6 +37,9 @@ struct HomeScreenView: View {
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             .background(.theme)
+            .task {
+                homeVm.loadFavoriteMovies()
+            }
         }
     }
     
@@ -74,14 +77,15 @@ struct HomeScreenView: View {
                 .frame(width: 160, height: 240)
                 .aspectRatio(contentMode: .fill)
                 .cornerRadius(16)
+            
             Button {
-                
+                homeVm.toggleFavoriteStatus(for: id)
             } label: {
-                Image(systemName: "heart.circle.fill")
+                Image(systemName:  "heart.circle.fill")
                     .resizable()
                     .frame(width: 35, height: 35)
                     .foregroundColor(.white)
-                    .background(.gray)
+                    .background(homeVm.favoriteMovieIds.contains(id) ? .red : .gray)
                     .clipShape(Circle())
                     .padding(10)
                     .shadow(color: .blue.opacity(0.3), radius: 8, x: 0, y: 0)

@@ -11,8 +11,12 @@ import CoreData
 protocol LocalMovieDataSourceProtocol {
     func fetchUpcomingMovies() -> [UpcomingMovie]
     func saveUpcomingMovies(_ movies: [MovieEntity])
+    
     func fetchPopularMovies() -> [PopularMovie]
     func savePopularMovies(_ movies: [MovieEntity])
+    
+    func fetchFavoriteMovieIds() -> [Int]
+    func saveFavoriteMovie(_ movieIds: Int)
 }
 
 class LocalMovieDataSource: LocalMovieDataSourceProtocol {
@@ -65,6 +69,44 @@ class LocalMovieDataSource: LocalMovieDataSourceProtocol {
             try context.save()
         } catch {
             print("Error saving movies: \(error)")
+        }
+    }
+    
+    func fetchFavoriteMovieIds() -> [Int] {
+        let request: NSFetchRequest<FavoriteMovie> = FavoriteMovie.fetchRequest()
+        do {
+            let ids = try context.fetch(request).compactMap { movie in
+                Int(movie.id)
+            }
+            return ids
+        } catch {
+            print("Error fetching movies: \(error)")
+            return []
+        }
+    }
+    
+    func saveFavoriteMovie(_ movieId: Int) {
+        let entity = FavoriteMovie(context: context)
+        entity.id = Int32(movieId)
+        
+        do {
+            try context.save()
+        } catch {
+            print("Error saving movies: \(error)")
+        }
+    }
+    
+    func deleteFavoriteMovie(_ movieId: Int) {
+        let request: NSFetchRequest<FavoriteMovie> = FavoriteMovie.fetchRequest()
+        request.predicate = NSPredicate(format: "id == %d", movieId)
+        
+        do {
+            if let movieEntity = try context.fetch(request).first {
+                context.delete(movieEntity)
+                try context.save()
+            }
+        } catch {
+            print("Error deleting favorite movie: \(error)")
         }
     }
 }

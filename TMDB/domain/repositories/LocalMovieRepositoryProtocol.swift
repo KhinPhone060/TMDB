@@ -13,5 +13,9 @@ protocol LocalMovieRepositoryProtocol {
     
     func getPopularMovies() async -> [MovieEntity]
     func savePopularMovies(_ movies: [MovieEntity])
+    
+    func getFavoriteMovieIds() -> [Int]
+    func saveFavoriteMovie(_ movieId: Int)
+    func removeFavoriteMovie(_ movieId: Int)
 }
 

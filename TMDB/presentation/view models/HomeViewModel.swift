@@ -11,17 +11,18 @@ import Combine
 class HomeViewModel: ObservableObject {
     @Published var upcomingMovies: [MovieEntity] = []
     @Published var popularMovies: [MovieEntity] = []
+    @Published var favoriteMovieIds: [Int] = []
     
     @Published var state: NetworkState = .loading
     
     private var cancellables = Set<AnyCancellable>()
     
     private let getMovieListUsecase: GetMovieListUsecase
-    private let getLocalMovieUsecase: LocalMovieUsecase
+    private let localMovieUsecase: LocalMovieUsecase
     
     init() {
         self.getMovieListUsecase = GetMovieListUsecase(repository: GetMovieListRepository())
-        self.getLocalMovieUsecase = MovieDependencyInjector.provideLocalMovieUsecase()
+        self.localMovieUsecase = MovieDependencyInjector.provideLocalMovieUsecase()
         fetchUpcomingMovieList()
         fetchPopularMovieList()
     }
@@ -30,7 +31,7 @@ class HomeViewModel: ObservableObject {
         state = .loading
         
         Task {
-            let offlineMovies = await getLocalMovieUsecase.getUpcomingMovie()
+            let offlineMovies = await localMovieUsecase.getUpcomingMovie()
             DispatchQueue.main.async {
                 self.upcomingMovies = offlineMovies
             }
@@ -57,7 +58,7 @@ class HomeViewModel: ObservableObject {
         state = .loading
         
         Task {
-            let offlineMovies = await getLocalMovieUsecase.getPopularMovie()
+            let offlineMovies = await localMovieUsecase.getPopularMovie()
             DispatchQueue.main.async {
                 self.upcomingMovies = offlineMovies
             }
@@ -78,6 +79,20 @@ class HomeViewModel: ObservableObject {
                 self?.state = .success
             })
             .store(in: &cancellables)
+    }
+    
+    func loadFavoriteMovies() {
+        favoriteMovieIds = localMovieUsecase.fetchFavoriteMovieIds()
+    }
+    
+    func toggleFavoriteStatus(for movieId: Int) {
+        if favoriteMovieIds.contains(movieId) {
+            localMovieUsecase.removeFavoriteMovie(movieId)
+            favoriteMovieIds.removeAll { $0 == movieId }
+        } else {
+            localMovieUsecase.addFavoriteMovie(movieId)
+            favoriteMovieIds.append(movieId)
+        }
     }
     
     func retry() {
