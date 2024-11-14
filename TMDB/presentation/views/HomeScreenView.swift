@@ -26,6 +26,9 @@ struct HomeScreenView: View {
                         }
                     }
                     .padding(.vertical)
+                    .refreshable {
+                        homeVm.retry()
+                    }
                 case .error(let error):
                     VStack {
                         Text("Error: \(error.localizedDescription)")
