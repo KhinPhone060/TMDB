@@ -21,7 +21,7 @@ class HomeViewModel: ObservableObject {
     private let localMovieUsecase: LocalMovieUsecase
     
     init() {
-        self.getMovieListUsecase = GetMovieListUsecase(repository: GetMovieListRepository())
+        self.getMovieListUsecase = GetMovieListDependencyInjector.provideMovieListUsecase()
         self.localMovieUsecase = MovieDependencyInjector.provideLocalMovieUsecase()
         fetchUpcomingMovieList()
         fetchPopularMovieList()

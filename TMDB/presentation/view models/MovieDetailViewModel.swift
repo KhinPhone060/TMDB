@@ -15,13 +15,14 @@ class MovieDetailViewModel: ObservableObject {
     
     private var cancellables = Set<AnyCancellable>()
     
-    private var getMovieDetailUsecase = GetMovieDetailUsecase(repository: GetMovieDetailRepository())
+    private var getMovieDetailUsecase: GetMovieDetailUsecase
     private let localMovieUsecase: LocalMovieUsecase
     
     let movieId: Int
     
     init(movieId: Int) {
         self.localMovieUsecase = MovieDependencyInjector.provideLocalMovieUsecase()
+        self.getMovieDetailUsecase = GetMovieDetailDependencyInjector.provideMovieDetailUsecase()
         self.movieId = movieId
         getMovieDetail(movieId: movieId)
     }
